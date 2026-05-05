@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta — Viajero Hostels × TWC</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="deck-stage.js"></script>
+<style>
+  /* ── Deck base ── */
+  deck-stage { --deck-bg: #0A0A0F; }
+
+  section {
+    width: 1920px; height: 1080px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    font-family: var(--font-body);
+    color: var(--fg1);
+    background: var(--twc-white);
+  }
+
+  /* ── Shared classes ── */
+  .s-pad { padding: 80px 100px; }
+  .s-pad-sm { padding: 60px 100px; }
+
+  .eyebrow {
+    font-family: var(--font-body); font-weight: 700;
+    font-size: 14px; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--twc-blue);
+    margin-bottom: 12px;
+  }
+  .eyebrow-white { color: rgba(255,255,255,0.7); }
+  .eyebrow-red { color: var(--twc-red); }
+
+  .slide-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 52px; line-height: 1.05;
+    letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 24px 0;
+  }
+
+  .slide-subtitle {
+    font-size: 22px; font-weight: 400;
+    line-height: 1.5; color: var(--fg2);
+    max-width: 900px;
+  }
+
+  .big-number {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 72px; line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .card {
+    background: var(--twc-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+  }
+
+  .card-dark {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    color: white;
+  }
+
+  .callout {
+    background: var(--twc-blue-100);
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    font-size: 18px; line-height: 1.6;
+    color: var(--twc-blue);
+    font-weight: 500;
+  }
+  .callout-red {
+    background: var(--twc-red-100);
+    color: var(--twc-red-900);
+  }
+  .callout-yellow {
+    background: #FFF8E1;
+    color: #5D4500;
+  }
+
+  .watermark {
+    position: absolute;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .check-list { list-style: none; padding: 0; margin: 0; }
+  .check-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 20px; line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .check-list li::before {
+    content: "✓"; color: var(--twc-blue);
+    font-weight: 700; font-size: 20px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  .pain-card {
+    background: var(--twc-red-100);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    flex: 1;
+  }
+  .pain-card .big-number {
+    color: var(--twc-red);
+    font-size: 44px;
+    margin-bottom: 12px;
+  }
+
+  table.clean {
+    width: 100%; border-collapse: collapse;
+    font-size: 18px;
+  }
+  table.clean th {
+    text-align: left; font-weight: 700;
+    padding: 14px 20px;
+    border-bottom: 2px solid var(--border);
+    font-size: 14px; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--fg3);
+  }
+  table.clean td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.5;
+  }
+  table.clean tr:last-child td { border-bottom: none; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+  .flex-row { display: flex; gap: 24px; }
+  .flex-1 { flex: 1; }
+
+  .pill {
+    display: inline-block;
+    background: var(--twc-blue-100); color: var(--twc-blue);
+    font-size: 13px; font-weight: 700;
+    padding: 4px 14px; border-radius: var(--radius-pill);
+    letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .pill-red {
+    background: var(--twc-red-100); color: var(--twc-red);
+  }
+  .pill-green {
+    background: #E6F9E6; color: #1B7A1B;
+  }
+  .pill-gray {
+    background: var(--twc-gray-100); color: var(--twc-gray-700);
+  }
+
+  .blockquote {
+    font-size: 28px; line-height: 1.5;
+    font-weight: 500;
+    border-left: 4px solid var(--twc-blue);
+    padding-left: 28px;
+    color: var(--fg1);
+    max-width: 1100px;
+  }
+
+  /* Slide-specific */
+  .s-blue { background: var(--twc-blue); color: white; }
+  .s-dark { background: var(--twc-black); color: white; }
+  .s-muted { background: var(--twc-gray-50); }
+
+  .metric-row {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 6px;
+  }
+  .metric-row .big-number { font-size: 56px; }
+  .metric-row .label { font-size: 20px; color: var(--fg2); }
+
+  .timeline-item {
+    border-left: 3px solid var(--twc-blue);
+    padding: 0 0 0 24px;
+    margin-bottom: 0;
+  }
+
+  .arrow-right {
+    display: inline-block;
+    color: var(--twc-blue); font-size: 28px; font-weight: 700;
+  }
+
+  .footer-line {
+    position: absolute; bottom: 28px; left: 100px; right: 100px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--fg3);
+  }
+  .footer-line img { height: 22px; opacity: 0.5; }
+</style>
+</head>
+<body>
+<deck-stage>
+
+<!-- ============ SLIDE 1 — PORTADA ============ -->
+<section data-screen-label="01 Portada" class="s-blue s-pad" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start;">
+  <img src="assets/twc-isotype-white-on-blue.png" alt="" class="watermark" style="right:-60px; bottom:-60px; width: 500px;">
+  <div style="margin-bottom: 48px;">
+    <img src="assets/twc-logo-full-blue-bg.png" alt="TWC" style="height: 40px;">
+  </div>
+  <p class="eyebrow eyebrow-white" style="margin-bottom:16px;">Partnership Anual · Mayo 2026</p>
+  <h1 style="font-family:var(--font-display); font-weight:700; font-size:72px; line-height:1.02; letter-spacing:-0.02em; text-transform:uppercase; color:white; margin:0 0 28px 0; max-width:1200px;">
+    Adopción y evolución<br>del espacio de trabajo<br>en Notion
+  </h1>
+  <p style="font-size:24px; color:rgba(255,255,255,0.75); font-weight:400; max-width:700px; line-height:1.5;">
+    Propuesta de acompañamiento estratégico para<br><strong style="color:white;">Viajero Hostels</strong>
+  </p>
+</section>
+
+<!-- ============ SLIDE 2 — RESUMEN EJECUTIVO ============ -->
+<section data-screen-label="02 Resumen Ejecutivo" class="s-pad-sm">
+  <img src="assets/twc-isotype-red.png" alt="" class="watermark" style="right:40px; bottom:40px; width:360px;">
+  <p class="eyebrow">Resumen Ejecutivo</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:32px;">Una vista, todo lo que importa</p>
+  <div class="grid-2" style="gap:20px; height: 780px;">
+    <!-- Retos -->
+    <div class="card" style="border-top:4px solid var(--twc-red); display:flex; flex-direction:column; gap:20px;">
+      <p style="font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; color:var(--twc-red);">Los 3 retos</p>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--twc-red); font-size:14px; margin-top:4px;">●</span>
+          <p style="font-size:18px; line-height:1.5; margin:0;"><strong style="font-size:22px;">$17,784 USD/año</strong> en licencias sin retorno medible. 78 de 152 licencias inactivas.</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--twc-red); font-size:14px; margin-top:4px;">●</span>
+          <p style="font-size:18px; line-height:1.5; margin:0;">Solo <strong style="font-size:22px;">18%</strong> del equipo con uso consistente. El sistema corre riesgo de quedarse en "primera intención".</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="color:var(--twc-red); font-size:14px; margin-top:4px;">●</span>
+          <p style="font-size:18px; line-height:1.5; margin:0;"><strong style="font-size:22px;">0 horas/mes</strong> de mantenimiento del sistema. Sin acompañamiento, en 6 meses el equipo regresa a Excel.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Meta -->
+    <div class="card" style="border-top:4px solid var(--twc-blue); display:flex; flex-direction:column; gap:20px;">
+      <p style="font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; color:var(--twc-blue);">La meta a 12 meses</p>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div><span style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">49% → ≥75%</span><br><span style="font-size:16px; color:var(--fg2);">Adopción mensual</span></div>
+        <div><span style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">18% → ≥60%</span><br><span style="font-size:16px; color:var(--fg2);">Adopción profunda</span></div>
+        <div><span style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">78 → ≤25</span><br><span style="font-size:16px; color:var(--fg2);">Licencias sin retorno</span></div>
+      </div>
+    </div>
+    <!-- Propuesta -->
+    <div class="card" style="border-top:4px solid var(--twc-black); display:flex; flex-direction:column; gap:16px;">
+      <p style="font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; color:var(--twc-black);">La propuesta</p>
+      <p style="font-size:18px; line-height:1.6; margin:0;">Partnership anual con <strong>5 pilares</strong>: inteligencia de adopción, evolución del workspace, nuevas capacidades, automatización & IA, y gobierno interno.</p>
+      <p style="font-size:16px; color:var(--fg2); margin:0;">Equipo TWC dedicado: Sebastián, Roxana, Daniela y Camila.</p>
+    </div>
+    <!-- Inversión -->
+    <div class="card" style="border-top:4px solid #1B7A1B; display:flex; flex-direction:column; gap:16px;">
+      <p style="font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; color:#1B7A1B;">La inversión</p>
+      <p style="font-family:var(--font-display); font-size:40px; font-weight:700; color:var(--twc-black); margin:0; line-height:1.1;">$23,460 <span style="font-size:22px; font-weight:500;">USD/año</span></p>
+      <p style="font-size:17px; line-height:1.5; margin:0; color:var(--fg2);">Pago anticipado con 15% de descuento.<br>Equivale al <strong style="color:var(--fg1);">68%</strong> de la inversión en licencias.</p>
+      <p style="font-size:15px; color:var(--fg3); margin:0;">Alternativa: $2,300 USD/mes</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 — SITUACIÓN ACTUAL ============ -->
+<section data-screen-label="03 Situación actual" class="s-pad">
+  <img src="assets/twc-isotype-red.png" alt="" class="watermark" style="right:40px; bottom:40px; width:320px;">
+  <p class="eyebrow">Contexto</p>
+  <p class="slide-title" style="margin-bottom:16px;">Dónde estamos hoy</p>
+  <p style="font-size:20px; color:var(--fg2); max-width:1000px; line-height:1.6; margin-bottom:40px;">Viajero Hostels es una cadena de hostales con presencia en más de <strong style="color:var(--fg1);">9 países</strong> y más de <strong style="color:var(--fg1);">30 sedes</strong> en Latinoamérica. En los últimos 4 meses, juntos construimos las bases del sistema operativo en Notion.</p>
+  <div class="grid-3" style="margin-bottom:40px;">
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">5</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Departamentos con espacio propio</p>
+    </div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">26</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Subáreas configuradas</p>
+    </div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">149</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Personas con acceso</p>
+    </div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">152</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Licencias Business</p>
+    </div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">12+</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Archivos Excel migrados</p>
+    </div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-blue); margin:0;">10</p>
+      <p style="font-size:16px; color:var(--fg2); margin:8px 0 0 0;">Sesiones de capacitación</p>
+    </div>
+  </div>
+  <div class="blockquote" style="font-size:22px;">Las bases están construidas. Lo que sigue ahora es lograr que el sistema se adopte, se mantenga vivo y evolucione con la operación.</div>
+</section>
+
+<!-- ============ SLIDE 4 — EL SIGUIENTE RETO ============ -->
+<section data-screen-label="04 El siguiente reto" class="s-pad">
+  <p class="eyebrow eyebrow-red">Diagnóstico</p>
+  <p class="slide-title" style="color:var(--twc-black); margin-bottom:12px;">El siguiente reto</p>
+  <p style="font-size:19px; color:var(--fg2); margin-bottom:36px;">Durante el cierre del proyecto identificamos los siguientes retos para los próximos 12 meses:</p>
+  <div class="flex-row" style="gap:24px;">
+    <div class="pain-card">
+      <p style="font-family:var(--font-display); font-weight:700; font-size:36px; color:var(--twc-red); margin:0 0 8px 0; line-height:1.1;">$17,784</p>
+      <p style="font-size:14px; font-weight:700; color:var(--twc-red); text-transform:uppercase; letter-spacing:0.03em; margin:0 0 16px 0;">USD/AÑO SIN RETORNO</p>
+      <p style="font-size:17px; line-height:1.55; color:var(--twc-red-900);">78 de 152 licencias activas no se están usando. Viajero pagó $34,656 USD/año por Notion Enterprise y hoy no existe un sistema que muestre cuántas personas realmente usan la herramienta.</p>
+    </div>
+    <div class="pain-card">
+      <p style="font-family:var(--font-display); font-weight:700; font-size:36px; color:var(--twc-red); margin:0 0 8px 0; line-height:1.1;">18%</p>
+      <p style="font-size:14px; font-weight:700; color:var(--twc-red); text-transform:uppercase; letter-spacing:0.03em; margin:0 0 16px 0;">ADOPCIÓN PROFUNDA</p>
+      <p style="font-size:17px; line-height:1.55; color:var(--twc-red-900);">Solo 27 de 152 personas muestran uso semanal sostenido. El sistema corre riesgo de quedarse en "primera intención de uso" — funcional sobre el papel, irrelevante en el día a día.</p>
+    </div>
+    <div class="pain-card">
+      <p style="font-family:var(--font-display); font-weight:700; font-size:36px; color:var(--twc-red); margin:0 0 8px 0; line-height:1.1;">0 hrs</p>
+      <p style="font-size:14px; font-weight:700; color:var(--twc-red); text-transform:uppercase; letter-spacing:0.03em; margin:0 0 16px 0;">MANTENIMIENTO MENSUAL</p>
+      <p style="font-size:17px; line-height:1.55; color:var(--twc-red-900);">Nuevas áreas, integración con Teams, automatizaciones, IA — todo en lista de espera. Sin acompañamiento, en 6 meses el equipo regresa a Excel y WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 — COSTO DE NO ACTUAR ============ -->
+<section data-screen-label="05 Costo de no actuar" class="s-pad-sm">
+  <p class="eyebrow eyebrow-red">Urgencia</p>
+  <p class="slide-title" style="font-size:44px; color:var(--twc-black); margin-bottom:14px;">El costo de no actuar</p>
+  <p style="font-size:17px; color:var(--fg2); max-width:1200px; line-height:1.6; margin-bottom:28px;">El 30% de las licencias de software corporativo nunca se usan y el 70% de las transformaciones digitales fallan por baja adopción. La diferencia está en lo que pasa entre el día 60 y 90 post-implementación.</p>
+  <table class="clean" style="margin-bottom:28px;">
+    <thead>
+      <tr><th style="width:140px;">Horizonte</th><th>Qué pasa si nada cambia</th><th style="width:300px; color:var(--twc-red);">Impacto en USD</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="font-size:20px;">Hoy</strong></td>
+        <td>78 personas inactivas. Solo 27 con uso consistente. Cero medición.</td>
+        <td style="font-family:var(--font-display); font-size:24px; font-weight:700; color:var(--twc-red);">$17,784/año</td>
+      </tr>
+      <tr>
+        <td><strong style="font-size:20px;">6 meses</strong></td>
+        <td>Los 47 usuarios frágiles caen a inactivos. ~100 personas dormidas. Erosión del hábito en los 27 consistentes.</td>
+        <td style="font-family:var(--font-display); font-size:24px; font-weight:700; color:var(--twc-red);">~$22,800/año</td>
+      </tr>
+      <tr>
+        <td><strong style="font-size:20px;">12 meses</strong></td>
+        <td>Renovación en zona de riesgo. Posibilidad real de que Viajero corte el contrato Enterprise y vuelva a Excel/WhatsApp.</td>
+        <td style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">$34,656</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout callout-red" style="font-size:17px; line-height:1.6;">
+    <strong>El problema no es que Notion no funcione.</strong> Es que no existe hoy un sistema que mida adopción y la convierta en acción, y cada mes que pasa sin ese sistema, el costo de la inacción crece. Viajero está justo en la ventana del día 60–90 post-implementación: la ventana donde se decide si esto se queda o se va.
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 — TRANSICIÓN ============ -->
+<section data-screen-label="06 Cómo lo solucionamos" class="s-blue s-pad" style="display:flex; flex-direction:column; justify-content:center;">
+  <img src="assets/twc-isotype-white-on-blue.png" alt="" class="watermark" style="right:60px; bottom:60px; width:400px;">
+  <p class="eyebrow eyebrow-white">Nuestra propuesta</p>
+  <p class="slide-title" style="font-size:56px; color:white; margin-bottom:48px;">¿Cómo lo solucionamos?</p>
+  <div class="blockquote" style="border-left-color:rgba(255,255,255,0.4); color:white; font-size:26px; max-width:1200px; line-height:1.6;">
+    Un partnership de 12 meses que mide la adopción real con datos del propio espacio de trabajo de Viajero, convierte cada hallazgo en una acción concreta, y acompaña a la compañía a evolucionar Notion como sistema operativo a medida que el equipo crece.
+  </div>
+  <p style="margin-top:40px; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.5); font-weight:600;">Modelo de acompañamiento anual y mejora continua</p>
+</section>
+
+<!-- ============ SLIDE 7 — QUÉ PROPONEMOS ============ -->
+<section data-screen-label="07 Qué proponemos" class="s-pad" style="display:flex; flex-direction:column; justify-content:center;">
+  <p class="eyebrow">Propuesta</p>
+  <p class="slide-title" style="margin-bottom:24px;">Qué proponemos</p>
+  <p style="font-size:21px; line-height:1.65; color:var(--fg2); max-width:1100px; margin-bottom:48px;">Nuestra propuesta es un partnership de <strong style="color:var(--fg1);">12 meses</strong> donde TWC se convierte en el socio estratégico de Viajero para que Notion se adopte, se mantenga vivo y evolucione con la operación.</p>
+  <p style="font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--twc-blue); margin-bottom:24px;">Este modelo permitirá</p>
+  <div style="display:flex; flex-direction:column; gap:20px; max-width:1000px;">
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <div style="width:8px; height:8px; border-radius:50%; background:var(--twc-blue); margin-top:10px; flex-shrink:0;"></div>
+      <p style="font-size:21px; line-height:1.55; margin:0;">Medir la adopción real cada semana con Analytics TWC.</p>
+    </div>
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <div style="width:8px; height:8px; border-radius:50%; background:var(--twc-blue); margin-top:10px; flex-shrink:0;"></div>
+      <p style="font-size:21px; line-height:1.55; margin:0;">Construir nuevos flujos por área a medida que aparecen las necesidades.</p>
+    </div>
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <div style="width:8px; height:8px; border-radius:50%; background:var(--twc-blue); margin-top:10px; flex-shrink:0;"></div>
+      <p style="font-size:21px; line-height:1.55; margin:0;">Transferir capacidad interna para que Viajero opere con creciente autonomía.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 — PILARES ============ -->
+<section data-screen-label="08 Pilares" class="s-pad-sm">
+  <p class="eyebrow">Modelo</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:32px;">Pilares del acompañamiento</p>
+  <div class="grid-5" style="gap:18px; height:720px;">
+    <div class="card" style="display:flex; flex-direction:column; gap:16px; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--twc-blue); margin:0; line-height:1;">1</p>
+      <p style="font-size:18px; font-weight:700; margin:0; line-height:1.2;">Inteligencia de adopción</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Medición semanal con Analytics TWC, diagnóstico de uso, identificación de áreas en riesgo, trainings focalizados, programa de champions internos.</p>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; gap:16px; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--twc-blue); margin:0; line-height:1;">2</p>
+      <p style="font-size:18px; font-weight:700; margin:0; line-height:1.2;">Evolución del espacio de trabajo</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Iteración mensual sobre flujos existentes, corrección de fricciones detectadas, optimización de bases de datos, vistas y permisos.</p>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; gap:16px; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--twc-blue); margin:0; line-height:1;">3</p>
+      <p style="font-size:18px; font-weight:700; margin:0; line-height:1.2;">Nuevas capacidades</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Construcción trimestral de nuevos módulos por área priorizados con la sponsor.</p>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; gap:16px; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--twc-blue); margin:0; line-height:1;">4</p>
+      <p style="font-size:18px; font-weight:700; margin:0; line-height:1.2;">Automatización e IA</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Activación gradual de automatizaciones e inteligencia artificial dentro de Notion, alineada al ritmo real del equipo.</p>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; gap:16px; padding:28px;">
+      <p style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--twc-blue); margin:0; line-height:1;">5</p>
+      <p style="font-size:18px; font-weight:700; margin:0; line-height:1.2;">Gobernanza y autonomía</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Definición de reglas de uso, formación de champions, documentación y transferencia de conocimiento progresiva.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9 — ANALYTICS (EL GANCHO) ============ -->
+<section data-screen-label="09 Datos de adopción" class="s-dark s-pad">
+  <p class="eyebrow" style="color:var(--twc-red);">Analytics TWC · Datos reales</p>
+  <p class="slide-title" style="font-size:38px; color:white; margin-bottom:40px; text-transform:none;">Adquirieron 152 licencias.<br><span style="color:var(--twc-red);">Solo 74 personas las usaron el último mes.</span></p>
+  <div class="flex-row" style="gap:24px; margin-bottom:36px;">
+    <div class="card-dark" style="flex:1; text-align:center;">
+      <p style="font-family:var(--font-display); font-size:72px; font-weight:700; color:white; margin:0;">152</p>
+      <p style="font-size:15px; color:rgba(255,255,255,0.6); margin:8px 0 0 0;">Licencias adquiridas<br>$34,656 USD/año</p>
+    </div>
+    <div class="card-dark" style="flex:1; text-align:center;">
+      <p style="font-family:var(--font-display); font-size:72px; font-weight:700; color:var(--twc-blue-100); margin:0;">74</p>
+      <p style="font-size:15px; color:rgba(255,255,255,0.6); margin:8px 0 0 0;">Activas en los<br>últimos 30 días</p>
+    </div>
+    <div class="card-dark" style="flex:1; text-align:center; border-color:var(--twc-red);">
+      <p style="font-family:var(--font-display); font-size:72px; font-weight:700; color:var(--twc-red); margin:0;">78</p>
+      <p style="font-size:15px; color:rgba(255,255,255,0.6); margin:8px 0 0 0;">No entraron a Notion<br>en 30 días</p>
+    </div>
+  </div>
+  <p style="font-size:28px; font-weight:700; color:var(--twc-red); line-height:1.4; margin-bottom:28px;">Es como si Viajero pagara 78 sueldos de software que nadie abre.</p>
+  <p style="font-size:20px; color:rgba(255,255,255,0.7); line-height:1.5; margin-bottom:0;">Eso representa <strong style="color:white;">$17,784 USD/año</strong> en licencias sin retorno medible hoy. Si la curva se mantiene 6 meses más, ese número sube a <strong style="color:var(--twc-red);">~$22,800 USD/año</strong>.</p>
+  <p style="position:absolute; bottom:28px; left:100px; font-size:12px; color:rgba(255,255,255,0.3);">Datos extraídos del espacio de trabajo de Viajero con Analytics TWC · ventana: últimos 30 días.</p>
+</section>
+
+<!-- ============ SLIDE 10 — ANALYTICS TWC PRODUCTO ============ -->
+<section data-screen-label="10 Analytics TWC" class="s-pad-sm">
+  <p class="eyebrow">Producto</p>
+  <p class="slide-title" style="font-size:38px; margin-bottom:8px;">Analytics TWC</p>
+  <p style="font-size:19px; color:var(--fg2); margin-bottom:32px; max-width:1000px; line-height:1.5;">El primer producto que mide adopción real de workspaces de Notion. <strong style="color:var(--fg1);">Notion no entrega esta visibilidad de forma nativa. Analytics TWC sí.</strong></p>
+  <div class="grid-3" style="gap:20px; margin-bottom:28px;">
+    <div class="card" style="padding:28px;">
+      <p style="font-size:28px; margin:0 0 12px 0;">🔍</p>
+      <p style="font-weight:700; font-size:17px; margin:0 0 8px 0;">Hacer visible lo invisible</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Saber exactamente qué áreas, equipos y personas están usando Notion — y cuáles no. Sin encuestas, sin reuniones.</p>
+    </div>
+    <div class="card" style="padding:28px;">
+      <p style="font-size:28px; margin:0 0 12px 0;">⭐</p>
+      <p style="font-weight:700; font-size:17px; margin:0 0 8px 0;">Amplificar power users</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Detectar a quienes sostienen el sistema y convertirlos en Champions internos antes de que se quemen solos.</p>
+    </div>
+    <div class="card" style="padding:28px;">
+      <p style="font-size:28px; margin:0 0 12px 0;">🚨</p>
+      <p style="font-weight:700; font-size:17px; margin:0 0 8px 0;">Detectar abandonos a tiempo</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Ver caer la actividad de un equipo en tiempo real — no en la encuesta de fin de año cuando ya volvieron a Excel.</p>
+    </div>
+    <div class="card" style="padding:28px;">
+      <p style="font-size:28px; margin:0 0 12px 0;">🎯</p>
+      <p style="font-weight:700; font-size:17px; margin:0 0 8px 0;">Capacitaciones con data</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Atacar exactamente las áreas y módulos que la data muestra como críticos. Cada capacitación tiene razón medible.</p>
+    </div>
+    <div class="card" style="padding:28px; grid-column: span 2;">
+      <p style="font-size:28px; margin:0 0 12px 0;">💸</p>
+      <p style="font-weight:700; font-size:17px; margin:0 0 8px 0;">Convertir la inversión en un activo medible</p>
+      <p style="font-size:15px; color:var(--fg2); line-height:1.55; margin:0;">Pasar de "creemos que está rindiendo" a "estos son los $X que recuperamos este mes y estos son los $Y que aún están en riesgo".</p>
+    </div>
+  </div>
+  <div class="callout" style="font-size:16px;">
+    <strong>Analytics TWC no es un dashboard.</strong> Es la decisión de adopción que ustedes toman cada lunes con datos en lugar de sensaciones. El dashboard es solo el medio — el producto real es la claridad para actuar.
+  </div>
+</section>
+
+<!-- ============ SLIDE 11 — 4 DIMENSIONES ============ -->
+<section data-screen-label="11 Cuatro dimensiones" class="s-pad-sm">
+  <p class="eyebrow">Primer vistazo</p>
+  <p class="slide-title" style="font-size:38px; margin-bottom:8px;">Lo que ya podemos ver hoy en Viajero</p>
+  <p style="font-size:17px; color:var(--fg2); margin-bottom:28px;">Esto es solo el primer vistazo de las 4 dimensiones de adopción.</p>
+  <div class="grid-2" style="gap:20px; margin-bottom:24px;">
+    <div class="card" style="padding:28px; border-top:4px solid var(--twc-blue);">
+      <p style="font-weight:700; font-size:15px; color:var(--twc-blue); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 12px 0;">🎯 Alcance</p>
+      <p style="font-family:var(--font-display); font-size:44px; font-weight:700; color:var(--twc-blue); margin:0;">49%</p>
+      <p style="font-size:15px; color:var(--fg2); margin:4px 0 12px 0;">74 de 152 personas activas en los últimos 30 días</p>
+      <p style="font-size:14px; color:var(--fg3); margin:0; font-style:italic;">¿Quiénes son las 78 personas que no han entrado? ¿Es por área? ¿Es por rol?</p>
+    </div>
+    <div class="card" style="padding:28px; border-top:4px solid var(--twc-blue);">
+      <p style="font-weight:700; font-size:15px; color:var(--twc-blue); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 12px 0;">📚 Profundidad</p>
+      <p style="font-family:var(--font-display); font-size:44px; font-weight:700; color:var(--twc-blue); margin:0;">—</p>
+      <p style="font-size:15px; color:var(--fg2); margin:4px 0 12px 0;">Próximo entregable</p>
+      <p style="font-size:14px; color:var(--fg3); margin:0; font-style:italic;">En la primera semana: mapa de qué bases de datos están vivas, abandonadas o redundantes.</p>
+    </div>
+    <div class="card" style="padding:28px; border-top:4px solid var(--twc-blue);">
+      <p style="font-weight:700; font-size:15px; color:var(--twc-blue); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 12px 0;">🔄 Consistencia</p>
+      <p style="font-family:var(--font-display); font-size:44px; font-weight:700; color:var(--twc-blue); margin:0;">2.7 <span style="font-size:22px; font-weight:500;">días/sem</span></p>
+      <p style="font-size:15px; color:var(--fg2); margin:4px 0 12px 0;">Solo 27 de 74 activos (36%) muestran uso consistente semana tras semana</p>
+      <p style="font-size:14px; color:var(--fg3); margin:0; font-style:italic;">¿Es hábito o ráfaga? ¿Son siempre los mismos pocos?</p>
+    </div>
+    <div class="card" style="padding:28px; border-top:4px solid var(--twc-blue);">
+      <p style="font-weight:700; font-size:15px; color:var(--twc-blue); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 12px 0;">💬 Colaboración</p>
+      <p style="font-family:var(--font-display); font-size:44px; font-weight:700; color:var(--twc-blue); margin:0;">5 <span style="font-size:22px; font-weight:500;">top users</span></p>
+      <p style="font-size:15px; color:var(--fg2); margin:4px 0 0 0;">Carlos Garzón (18) · María Cristina S. (10) · Andrea Torres (4) · Juan Villegas (3) · Fabricio Carrión (3)</p>
+      <p style="font-size:14px; color:var(--fg3); margin:8px 0 0 0; font-style:italic;">¿Estos 5 son los Champions naturales?</p>
+    </div>
+  </div>
+  <p style="font-size:15px; color:var(--fg3);">Lo que ven aquí es solo un vistazo. El partnership les entrega esta lectura cada lunes, con análisis y plan de acción.</p>
+</section>
+
+<!-- ============ SLIDE 12 — DATA → DECISIONES ============ -->
+<section data-screen-label="12 Data a decisiones" class="s-pad-sm">
+  <p class="eyebrow">Acción</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:28px;">No entregamos data.<br>Entregamos decisiones.</p>
+  <table class="clean" style="font-size:17px;">
+    <thead>
+      <tr>
+        <th style="width:360px; color:var(--twc-red);">Lo que vemos hoy en Viajero</th>
+        <th style="color:var(--twc-blue);">Lo que haríamos en el partnership</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>49% de adopción</strong> · 78 personas inactivas</td>
+        <td>Sesión 1:1 con cada líder de área para entender por qué su equipo no entró. Plan de reactivación focalizado en los primeros 30 días.</td>
+      </tr>
+      <tr>
+        <td><strong>2.7 días activos/semana</strong> · solo 27 usuarios consistentes</td>
+        <td>Diseño de rituales semanales en Notion: standups, weekly review, cierre mensual. Blindar a los 47 usuarios frágiles antes de que se vuelvan inactivos.</td>
+      </tr>
+      <tr>
+        <td><strong>Bases de datos sin diagnóstico</strong></td>
+        <td>Mapeo completo en la primera semana. Decisión por base de datos: simplificar, re-entrenar al equipo, o eliminar.</td>
+      </tr>
+      <tr>
+        <td><strong>Solo 2 personas</strong> concentran la mitad de la colaboración</td>
+        <td>Programa formal de Champions liderado por Carlos y María Cristina. Cada uno arrastra a 5–7 personas más en los primeros 90 días.</td>
+      </tr>
+      <tr>
+        <td><strong>51% de licencias</strong> sin retorno medible</td>
+        <td>Reporte mensual a Diana con: usuarios reactivados, licencias en riesgo, recomendación de reasignación.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ SLIDE 13 — HOJA DE RUTA ============ -->
+<section data-screen-label="13 Hoja de ruta" class="s-pad-sm">
+  <p class="eyebrow">Roadmap</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:32px;">Hoja de ruta de 12 meses</p>
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+    <div class="card" style="border-top:4px solid var(--twc-red); padding:24px;">
+      <span class="pill pill-red" style="margin-bottom:12px; display:inline-block;">Q1</span>
+      <p style="font-weight:700; font-size:18px; margin:12px 0 4px 0;">Estabilizar y reactivar</p>
+      <p style="font-size:13px; color:var(--twc-red); font-weight:600; margin:0 0 14px 0; text-transform:uppercase; letter-spacing:0.03em;">Cerrar la brecha de adopción</p>
+      <ul style="font-size:14px; color:var(--fg2); line-height:1.6; padding-left:16px; margin:0;">
+        <li>Reactivación de las 78 personas inactivas</li>
+        <li>Integración con Teams</li>
+        <li>Programa de Champions</li>
+        <li>Limpieza de bases de datos</li>
+        <li>Primer Índice de Adopción TWC</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--twc-blue); padding:24px;">
+      <span class="pill" style="margin-bottom:12px; display:inline-block;">Q2</span>
+      <p style="font-weight:700; font-size:18px; margin:12px 0 4px 0;">Construir hábito</p>
+      <p style="font-size:13px; color:var(--twc-blue); font-weight:600; margin:0 0 14px 0; text-transform:uppercase; letter-spacing:0.03em;">Convertir el uso en rutina</p>
+      <ul style="font-size:14px; color:var(--fg2); line-height:1.6; padding-left:16px; margin:0;">
+        <li>Rituales semanales por área</li>
+        <li>2 nuevos flujos por área</li>
+        <li>Primera automatización</li>
+        <li>Sponsor review trimestral</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--twc-blue); padding:24px;">
+      <span class="pill" style="margin-bottom:12px; display:inline-block;">Q3</span>
+      <p style="font-weight:700; font-size:18px; margin:12px 0 4px 0;">Activar IA y escala</p>
+      <p style="font-size:13px; color:var(--twc-blue); font-weight:600; margin:0 0 14px 0; text-transform:uppercase; letter-spacing:0.03em;">Pilotar inteligencia artificial</p>
+      <ul style="font-size:14px; color:var(--fg2); line-height:1.6; padding-left:16px; margin:0;">
+        <li>Pilotos con Notion AI en 2 áreas</li>
+        <li>Agentes de Notion para flujos repetitivos</li>
+        <li>2 nuevos flujos</li>
+        <li>Optimización mobile</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid #1B7A1B; padding:24px;">
+      <span class="pill pill-green" style="margin-bottom:12px; display:inline-block;">Q4</span>
+      <p style="font-weight:700; font-size:18px; margin:12px 0 4px 0;">Consolidar autonomía</p>
+      <p style="font-size:13px; color:#1B7A1B; font-weight:600; margin:0 0 14px 0; text-transform:uppercase; letter-spacing:0.03em;">Transferir capacidad interna</p>
+      <ul style="font-size:14px; color:var(--fg2); line-height:1.6; padding-left:16px; margin:0;">
+        <li>Documentación completa del sistema</li>
+        <li>Formación avanzada de champions</li>
+        <li>Onboarding automatizado</li>
+        <li>Retro anual y plan de continuidad</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14 — RITUALES ============ -->
+<section data-screen-label="14 Rituales" class="s-pad-sm">
+  <p class="eyebrow">Operación</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:32px;">Rituales de trabajo</p>
+  <div class="grid-3" style="gap:24px;">
+    <div class="card" style="border-top:4px solid var(--twc-gray-300); padding:28px;">
+      <p style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue); text-transform:uppercase; margin:0 0 20px 0;">Semanal</p>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">📊</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">Reporte automático del Índice de Adopción TWC (cada lunes, sin reunión)</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">🛟</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">2 horas de office hours abiertas para el equipo de Viajero (Slack o llamada bajo demanda)</p>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--twc-blue); padding:28px;">
+      <p style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue); text-transform:uppercase; margin:0 0 20px 0;">Mensual</p>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">📞</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">1 reunión de 60 min con Diana — lectura del reporte + plan de acción</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">👥</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">1 sesión de 60 min con el grupo de Champions internos</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">📝</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">Reporte ejecutivo con hallazgos, acciones y recomendaciones</p>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--twc-red); padding:28px;">
+      <p style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue); text-transform:uppercase; margin:0 0 20px 0;">Trimestral</p>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">🎯</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">Sponsor review estratégico de 90 min — OKRs, priorización, nuevos flujos</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">🛠</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">Entrega de 2 nuevos flujos/módulos del trimestre</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">🔌</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">Entrega de la integración o automatización del trimestre</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:20px; flex-shrink:0;">🎓</span>
+          <p style="font-size:16px; line-height:1.5; margin:0;">2 sesiones de capacitación focalizada (90 min c/u)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 15 — ENTREGABLES ============ -->
+<section data-screen-label="15 Entregables" class="s-pad-sm">
+  <p class="eyebrow">Alcance</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:28px;">Entregables del partnership</p>
+  <div class="grid-3" style="gap:20px;">
+    <!-- Firmes -->
+    <div class="card" style="border-top:4px solid var(--twc-blue); padding:28px;">
+      <span class="pill" style="margin-bottom:16px; display:inline-block;">Compromisos firmes</span>
+      <p style="font-weight:700; font-size:15px; color:var(--fg3); text-transform:uppercase; letter-spacing:0.03em; margin:16px 0 12px 0;">Por mes</p>
+      <ul style="font-size:15px; color:var(--fg2); line-height:1.7; padding-left:16px; margin:0 0 16px 0;">
+        <li>1 reporte de adopción</li>
+        <li>1 reunión de revisión (60 min)</li>
+        <li>2 horas de office hours</li>
+        <li>1 sesión con Champions (60 min)</li>
+      </ul>
+      <p style="font-weight:700; font-size:15px; color:var(--fg3); text-transform:uppercase; letter-spacing:0.03em; margin:0 0 12px 0;">Por trimestre</p>
+      <ul style="font-size:15px; color:var(--fg2); line-height:1.7; padding-left:16px; margin:0;">
+        <li>2 nuevos flujos o módulos</li>
+        <li>1 integración o automatización</li>
+        <li>2 capacitaciones focalizadas</li>
+        <li>1 sponsor review (90 min)</li>
+      </ul>
+    </div>
+    <!-- Según necesidad -->
+    <div class="card" style="border-top:4px solid var(--twc-gray-300); padding:28px;">
+      <span class="pill pill-gray" style="margin-bottom:16px; display:inline-block;">Según necesidad</span>
+      <ul style="font-size:16px; color:var(--fg2); line-height:1.8; padding-left:16px; margin:20px 0 0 0;">
+        <li>Ajustes menores en flujos existentes</li>
+        <li>Soporte consultivo asincrónico</li>
+        <li>Recomendaciones tácticas basadas en data semanal</li>
+        <li>Onboarding de hasta 10 nuevos ingresos al año</li>
+      </ul>
+    </div>
+    <!-- Fuera -->
+    <div class="card" style="border-top:4px solid var(--twc-gray-200); padding:28px; background:var(--twc-gray-50);">
+      <span class="pill pill-gray" style="margin-bottom:16px; display:inline-block;">Cotización aparte</span>
+      <ul style="font-size:16px; color:var(--fg3); line-height:1.8; padding-left:16px; margin:20px 0 0 0;">
+        <li>Implementación de un nuevo departamento completo</li>
+        <li>Migraciones masivas de datos</li>
+        <li>Construcción de productos custom (ej. agentes IA dedicados)</li>
+        <li>Eventos presenciales o trainings on-site</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 16 — MÉTRICAS DE ÉXITO ============ -->
+<section data-screen-label="16 Métricas de éxito" class="s-pad-sm">
+  <p class="eyebrow">KPIs</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:12px;">Métricas de éxito del partnership</p>
+  <p style="font-size:19px; color:var(--fg2); margin-bottom:32px;">Al cierre de los 12 meses, Viajero habrá movido sus indicadores de adopción a:</p>
+  <table class="clean" style="font-size:18px; max-width:1400px;">
+    <thead>
+      <tr>
+        <th>Indicador</th>
+        <th style="text-align:center; width:200px;">Hoy</th>
+        <th style="text-align:center; width:60px;"></th>
+        <th style="text-align:center; width:200px;">Meta a 12 meses</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Tasa de adopción mensual</strong></td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">49%</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">≥75%</td>
+      </tr>
+      <tr>
+        <td><strong>Adopción profunda</strong> (uso consistente)</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">18%</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">≥60%</td>
+      </tr>
+      <tr>
+        <td><strong>Días activos por semana</strong></td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">2.7</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">≥3.5</td>
+      </tr>
+      <tr>
+        <td><strong>Licencias sin retorno medible</strong></td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">78</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">≤25</td>
+      </tr>
+      <tr>
+        <td><strong>Champions internos formados</strong></td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">2</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">≥8</td>
+      </tr>
+      <tr>
+        <td><strong>Áreas con flujos completos en Notion</strong></td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-red);">1</td>
+        <td style="text-align:center; font-size:24px; color:var(--twc-blue);">→</td>
+        <td style="text-align:center; font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--twc-blue);">5</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px; color:var(--fg3); margin-top:24px;">Estas metas se revisan en el sponsor review trimestral y se ajustan según el comportamiento real del equipo.</p>
+</section>
+
+<!-- ============ SLIDE 17 — LO QUE NO ES ============ -->
+<section data-screen-label="17 Lo que NO es" class="s-pad-sm">
+  <p class="eyebrow">Diferencial</p>
+  <p class="slide-title" style="font-size:42px; margin-bottom:28px;">Lo que NO es este partnership</p>
+  <table class="clean" style="font-size:17px; margin-bottom:28px;">
+    <thead>
+      <tr>
+        <th style="color:var(--fg3);">Implementación (cerrada en abril 2026)</th>
+        <th style="color:var(--twc-blue);">Partnership (próximos 12 meses)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--fg3);">Proyecto de duración fija con alcance cerrado</td>
+        <td><strong>Acompañamiento continuo</strong> a un sistema vivo</td>
+      </tr>
+      <tr>
+        <td style="color:var(--fg3);">Construir las bases del workspace</td>
+        <td>Lograr que esas bases <strong>se adopten, se mantengan vivas y evolucionen</strong></td>
+      </tr>
+      <tr>
+        <td style="color:var(--fg3);">Capacitación inicial al equipo</td>
+        <td><strong>Formación continua</strong> + Champions internos + refuerzo de hábitos</td>
+      </tr>
+      <tr>
+        <td style="color:var(--fg3);">Resultado: el sistema existe</td>
+        <td>Resultado: el sistema <strong>se usa, genera retorno</strong> y crece con la operación</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout-yellow callout" style="font-size:17px; line-height:1.6;">
+    <strong>Comprar un Tesla no incluye el mantenimiento</strong> que lo mantiene corriendo año tras año. Construir el workspace fue solo el primer paso. Sin mantenimiento, los sistemas vivos se desactualizan, y la inversión inicial pierde valor mes a mes. El partnership es el mantenimiento estratégico que mantiene al sistema rindiendo.
+  </div>
+</section>
+
+<!-- ============ SLIDE 18 — INVERSIÓN ============ -->
+<section data-screen-label="18 Inversión" class="s-pad" style="display:flex; flex-direction:column; justify-content:center;">
+  <img src="assets/twc-isotype-red.png" alt="" class="watermark" style="right:40px; bottom:40px; width:300px;">
+  <p class="eyebrow">Inversión</p>
+  <p class="slide-title" style="font-size:44px; margin-bottom:36px;">Inversión del partnership</p>
+  <div class="flex-row" style="gap:28px; align-items:stretch;">
+    <!-- Anticipado -->
+    <div style="flex:1.2; background:var(--twc-blue); color:white; border-radius:var(--radius-lg); padding:40px; display:flex; flex-direction:column; gap:20px; position:relative; overflow:hidden;">
+      <img src="assets/twc-isotype-white-on-blue.png" alt="" style="position:absolute; right:-30px; bottom:-30px; width:200px; opacity:0.1;">
+      <span class="pill" style="background:rgba(255,255,255,0.15); color:white; align-self:flex-start;">Recomendada</span>
+      <p style="font-size:16px; color:rgba(255,255,255,0.7); margin:0;">Pago anticipado anual</p>
+      <p style="font-family:var(--font-display); font-size:64px; font-weight:700; margin:0; line-height:1;">$23,460 <span style="font-size:24px;">USD</span></p>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <p style="font-size:17px; margin:0; display:flex; align-items:center; gap:8px;"><span style="color:#90EE90;">✓</span> 15% de descuento — ahorro de $4,140 USD</p>
+        <p style="font-size:17px; margin:0; display:flex; align-items:center; gap:8px;"><span style="color:#90EE90;">✓</span> Equivale al 68% de la inversión en licencias</p>
+        <p style="font-size:17px; margin:0; display:flex; align-items:center; gap:8px;"><span style="color:#90EE90;">✓</span> El partnership prácticamente se paga solo</p>
+      </div>
+    </div>
+    <!-- Mensual -->
+    <div style="flex:0.8; border:1px solid var(--border); border-radius:var(--radius-lg); padding:40px; display:flex; flex-direction:column; gap:20px;">
+      <span class="pill pill-gray" style="align-self:flex-start;">Alternativa</span>
+      <p style="font-size:16px; color:var(--fg3); margin:0;">Pago mensual</p>
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; color:var(--twc-black); margin:0; line-height:1;">$2,300 <span style="font-size:20px; color:var(--fg3);">USD/mes</span></p>
+      <p style="font-size:17px; color:var(--fg2); margin:0;">$27,600 USD anuales</p>
+    </div>
+  </div>
+  <div style="margin-top:28px; display:flex; gap:16px; flex-wrap:wrap;">
+    <p style="font-size:15px; color:var(--fg2); margin:0;">Incluye: Analytics TWC sin costo adicional · Equipo dedicado: Sebastián, Roxana, Daniela y Camila · 12 meses · Revisión trimestral con Diana · Renovación a discutir al cierre.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 19 — SOBRE NOSOTROS ============ -->
+<section data-screen-label="19 Sobre nosotros" class="s-blue s-pad" style="display:flex; flex-direction:column; justify-content:center;">
+  <img src="assets/twc-isotype-white-on-blue.png" alt="" class="watermark" style="right:40px; bottom:40px; width:360px;">
+  <div style="margin-bottom:40px;">
+    <img src="assets/twc-logo-full-blue-bg.png" alt="TWC" style="height: 44px;">
+  </div>
+  <p class="slide-title" style="font-size:48px; color:white; margin-bottom:40px;">The Workflow Company</p>
+  <div class="grid-3" style="gap:24px; margin-bottom:48px;">
+    <div class="card-dark" style="text-align:center;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; margin:0;">+35</p>
+      <p style="font-size:16px; color:rgba(255,255,255,0.7); margin:10px 0 0 0;">Equipos transformados en +5 países de Latinoamérica</p>
+    </div>
+    <div class="card-dark" style="text-align:center;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; margin:0;">+750</p>
+      <p style="font-size:16px; color:rgba(255,255,255,0.7); margin:10px 0 0 0;">Miembros en la Comunidad de Notion Colombia</p>
+    </div>
+    <div class="card-dark" style="text-align:center;">
+      <p style="font-family:var(--font-display); font-size:52px; font-weight:700; margin:0;">6</p>
+      <p style="font-size:16px; color:rgba(255,255,255,0.7); margin:10px 0 0 0;">Certificaciones oficiales de Notion</p>
+    </div>
+  </div>
+  <p style="font-size:18px; color:rgba(255,255,255,0.6); margin:0;">Startups · Agencias · PYMES y mid-market · ONGs y Fundaciones</p>
+</section>
+
+<!-- ============ SLIDE 20 — PRÓXIMOS PASOS ============ -->
+<section data-screen-label="20 Próximos pasos" class="s-pad" style="display:flex; flex-direction:column; justify-content:center;">
+  <img src="assets/twc-isotype-red.png" alt="" class="watermark" style="right:40px; bottom:40px; width:320px;">
+  <p class="eyebrow">Cierre</p>
+  <p class="slide-title" style="font-size:48px; margin-bottom:40px;">Próximos pasos</p>
+  <div style="display:flex; flex-direction:column; gap:0; max-width:1100px;">
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--twc-blue); color:white; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:700; flex-shrink:0;">1</div>
+      <div>
+        <p style="font-size:20px; font-weight:700; margin:0 0 4px 0;">Validación de la propuesta con Diana</p>
+        <p style="font-size:16px; color:var(--fg2); margin:0;">Alineación final sobre alcance y modalidad de pago.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--twc-blue); color:white; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:700; flex-shrink:0;">2</div>
+      <div>
+        <p style="font-size:20px; font-weight:700; margin:0 0 4px 0;">Firma del acuerdo de partnership</p>
+        <p style="font-size:16px; color:var(--fg2); margin:0;">12 meses con revisión trimestral.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--twc-blue); color:white; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:700; flex-shrink:0;">3</div>
+      <div>
+        <p style="font-size:20px; font-weight:700; margin:0 0 4px 0;">Kick-off del partnership — primera semana</p>
+        <p style="font-size:16px; color:var(--fg2); margin:0;">Conexión de Analytics TWC · Primer Índice de Adopción · Mapeo de bases de datos · Sesiones 1:1 con líderes de área.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:20px 0;">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--twc-blue); color:white; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:700; flex-shrink:0;">4</div>
+      <div>
+        <p style="font-size:20px; font-weight:700; margin:0 0 4px 0;">Primer Sponsor Review — cierre del Q1</p>
+        <p style="font-size:16px; color:var(--fg2); margin:0;">Revisión de OKRs del partnership al cierre del mes 3.</p>
+      </div>
+    </div>
+  </div>
+  <div class="blockquote" style="margin-top:40px; font-size:22px; max-width:1000px;">
+    Sebastián, Roxana, Daniela y Camila estamos listos para seguir construyendo este proyecto con Viajero.<br><strong style="color:var(--twc-blue);">El siguiente paso es de ustedes.</strong>
+  </div>
+</section>
+
+</deck-stage>
+</body>
+</html>

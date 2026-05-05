@@ -1,0 +1,321 @@
+/* =========================================================
+   THE WORKFLOW COMPANY — Colors & Type Foundations
+   Import this ONE file into every TWC mock, slide, or kit.
+   ========================================================= */
+
+/* ---------- Fonts ---------- */
+
+/* Chillax is not freely redistributable on CORS-friendly CDNs.
+   Swap in "Space Grotesk" as the closest Google-Font match until
+   Chillax-Bold.woff2 is dropped into /fonts/. When it is, the
+   @font-face at the bottom automatically starts using the real file. */
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/montserrat-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/montserrat-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/montserrat-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/montserrat-700.woff2") format("woff2");
+}
+
+/* Display face — Chillax Bold preferred, Space Grotesk 700 as graceful fallback. */
+@font-face {
+  font-family: "Chillax";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/chillax-600.woff2") format("woff2"),
+       url("fonts/spacegrotesk-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Chillax";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/chillax-700.woff2") format("woff2"),
+       url("fonts/spacegrotesk-700.woff2") format("woff2");
+}
+
+/* ---------- Tokens ---------- */
+
+:root {
+  /* ——— Core brand palette ——— */
+  --twc-red:        #EF003C;  /* PRIMARY — isotipo, CTAs hero, color dominante de marca */
+  --twc-blue:       #2700FF;  /* ACCENT — fondos destacados, titulares, links, secciones */
+  --twc-gray:       #CACACA;  /* neutral de soporte — fondos secundarios, borders */
+  --twc-white:      #FFFFFF;  /* base */
+  --twc-black:      #0A0A0F;  /* texto extremo cuando azul es demasiado */
+
+  /* Tonal shifts derived from the brand trio. Use sparingly — brand is flat. */
+  --twc-blue-900:   #1A00B3;  /* pressed / darker surface */
+  --twc-blue-100:   #E8E4FF;  /* tinted background for blue callouts on white */
+  --twc-red-900:    #B3002D;  /* pressed */
+  --twc-red-100:    #FDE0E7;  /* tinted background for red callouts on white */
+  --twc-gray-50:    #F7F7F7;  /* page canvas */
+  --twc-gray-100:   #EFEFEF;
+  --twc-gray-200:   #E3E3E3;
+  --twc-gray-300:   #CACACA;  /* = --twc-gray */
+  --twc-gray-500:   #8A8A8A;
+  --twc-gray-700:   #4A4A4A;
+  --twc-gray-900:   #1A1A1A;
+
+  /* ——— Semantic surfaces ——— */
+  --bg:             var(--twc-white);
+  --bg-muted:       var(--twc-gray-50);
+  --bg-brand:       var(--twc-red);
+  --bg-accent:      var(--twc-blue);
+  --surface:        var(--twc-white);
+  --surface-muted:  var(--twc-gray-50);
+  --border:         var(--twc-gray-200);
+  --border-strong:  var(--twc-gray-300);
+
+  /* ——— Semantic text ——— */
+  --fg1:            var(--twc-black);   /* primary body */
+  --fg2:            var(--twc-gray-700);/* secondary body */
+  --fg3:            var(--twc-gray-500);/* tertiary / captions */
+  --fg-brand:       var(--twc-red);    /* emphasis / primary brand color */
+  --fg-accent:      var(--twc-blue);    /* accent text (links, secondary emphasis) */
+  --fg-on-brand:    var(--twc-white);   /* text on red fills */
+  --fg-on-accent:   var(--twc-white);   /* text on blue fills */
+
+  /* ——— Focus / state ——— */
+  --focus-ring:     var(--twc-red);
+
+  /* ——— Type families ——— */
+  --font-display:   "Chillax", "Space Grotesk", "Satoshi", "Inter", system-ui, sans-serif;
+  --font-body:      "Montserrat", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:      ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* ——— Type scale (rem, 16px base) ——— */
+  --text-2xs:       0.6875rem;  /* 11px — micro/labels, use sparingly */
+  --text-xs:        0.75rem;    /* 12px — caption */
+  --text-sm:        0.875rem;   /* 14px — UI small */
+  --text-base:      1rem;       /* 16px — body */
+  --text-md:        1.125rem;   /* 18px — lede */
+  --text-lg:        1.375rem;   /* 22px — section subhead */
+  --text-xl:        1.75rem;    /* 28px — h3 */
+  --text-2xl:       2.25rem;    /* 36px — h2 */
+  --text-3xl:       3rem;       /* 48px — h1 */
+  --text-4xl:       4rem;       /* 64px — hero */
+  --text-5xl:       5.5rem;     /* 88px — display / landing */
+
+  --lh-tight:       1.05;
+  --lh-snug:        1.2;
+  --lh-normal:      1.5;
+  --lh-relaxed:     1.65;
+
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+  --tracking-body:    0;
+  --tracking-label:   0.04em;
+
+  /* ——— Radii ——— */
+  --radius-xs:      4px;
+  --radius-sm:      8px;     /* default UI surfaces */
+  --radius-md:      12px;    /* cards */
+  --radius-lg:      16px;    /* hero blocks */
+  --radius-pill:    999px;   /* capsule buttons / tags */
+
+  /* ——— Spacing (4px base) ——— */
+  --space-1:        4px;
+  --space-2:        8px;
+  --space-3:        12px;
+  --space-4:        16px;
+  --space-5:        24px;
+  --space-6:        32px;
+  --space-7:        48px;
+  --space-8:        64px;
+  --space-9:        96px;
+  --space-10:       128px;
+
+  /* ——— Elevation ———
+     TWC is flat-first. Use shadows sparingly. No soft glassy blurs. */
+  --shadow-0:       none;
+  --shadow-1:       0 1px 0 0 rgba(10,10,15,0.06), 0 1px 2px rgba(10,10,15,0.04);
+  --shadow-2:       0 4px 12px rgba(10,10,15,0.08);
+  --shadow-brand:   0 10px 30px rgba(39, 0, 255, 0.18);
+
+  /* ——— Motion ——— */
+  --ease-standard:  cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasis:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:       120ms;
+  --dur-base:       200ms;
+  --dur-slow:       360ms;
+
+  /* ——— Layout ——— */
+  --container-sm:   640px;
+  --container-md:   960px;
+  --container-lg:   1200px;
+  --container-xl:   1440px;
+}
+
+/* ---------- Base element styles ---------- */
+
+html {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--fg1);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--fg1);
+  margin: 0;
+}
+
+/* ---------- Semantic type classes / element defaults ---------- */
+
+h1, .h1, .twc-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h2, .h2, .twc-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h3, .h3, .twc-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-heading);
+  margin: 0;
+}
+
+h4, .h4, .twc-h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+.twc-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-5xl);
+  line-height: 0.95;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.twc-hero {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.twc-lede {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-md);
+  line-height: var(--lh-relaxed);
+  color: var(--fg2);
+}
+
+p, .twc-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--fg1);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.twc-caption {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-xs);
+  line-height: var(--lh-normal);
+  color: var(--fg3);
+}
+
+.twc-eyebrow,
+.twc-overline {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+code, .twc-code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--surface-muted);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border);
+}
+
+a, .twc-link {
+  color: var(--fg-brand);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+a:hover, .twc-link:hover { opacity: 0.7; }
+
+/* ---------- Utilities ---------- */
+
+.twc-bg-blue   { background: var(--twc-blue); color: var(--fg-on-brand); }
+.twc-bg-red    { background: var(--twc-red);  color: var(--fg-on-accent); }
+.twc-bg-white  { background: var(--twc-white); color: var(--fg1); }
+.twc-bg-muted  { background: var(--bg-muted);  color: var(--fg1); }
+
+.twc-text-blue  { color: var(--twc-blue); }
+.twc-text-red   { color: var(--twc-red); }
+.twc-text-white { color: var(--twc-white); }
+
+.twc-border    { border: 1px solid var(--border); }
+.twc-border-strong { border: 1px solid var(--border-strong); }
+
+.twc-rounded-sm { border-radius: var(--radius-sm); }
+.twc-rounded-md { border-radius: var(--radius-md); }
+.twc-rounded-lg { border-radius: var(--radius-lg); }
+.twc-rounded-pill { border-radius: var(--radius-pill); }
